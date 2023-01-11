@@ -1,0 +1,42 @@
+Package: PERK
+Title: Predicting Envionmental Concentration and Risk
+Version: 0.0.0.9000
+Authors@R: 
+    person("Kishore Kumar", "Jagadeesan", , "jkkishore85@gmail.com", role = c("cre", "aut"))
+Description: A Shiny Web Application to predict and visualize
+    concentrations of pharmaceuticals in the aqueous environment.
+License: GPL (>= 3)
+Depends: 
+    bs4Dash,
+    DT,
+    shiny,
+    stats,
+    tibble,
+    utils
+Imports: 
+    colourpicker,
+    config (>= 0.3.1),
+    dplyr,
+    forcats,
+    ggplot2,
+    golem (>= 0.3.3),
+    grDevices,
+    magrittr,
+    plotly,
+    readr,
+    shinyjs,
+    shinyWidgets,
+    tidyr,
+    tools,
+    viridis,
+    zoo
+Suggests: 
+    knitr,
+    rmarkdown,
+    spelling
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 7.2.3
