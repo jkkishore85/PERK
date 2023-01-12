@@ -11,6 +11,8 @@ License: GPL (>= 3)
 URL: https://github.com/jkkishore85/PERK/, https://jkkishore85.github.io/PERK/
 BugReports: https://github.com/jkkishore85/PERK/issues
 Depends: 
+    bs4Dash,
+    DT,
     shiny,
     stats,
     tibble,
@@ -34,8 +36,7 @@ Imports:
     zoo
 Suggests: 
     knitr,
-    rmarkdown,
-    spelling
+    rmarkdown
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
