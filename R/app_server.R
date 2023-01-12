@@ -5,10 +5,12 @@
 #' @noRd
 #' @importFrom tibble tibble
 #' @importFrom bs4Dash toast
+#' @importFrom shiny reactiveValues observe observeEvent
 app_server <- function(input, output, session) {
   # Global variables
-  global <- reactiveValues()
-  observe({global$dark_mode <-  input$dark_mode})
+  global <- shiny::reactiveValues()
+  shiny::observe({
+    global$dark_mode <-  input$dark_mode})
 
   ## Templates - start ## ----
 
@@ -192,7 +194,7 @@ app_server <- function(input, output, session) {
                                       global = global)
   # current theme info ---------------------------------------------------------
 
- observeEvent(input$dark_mode, {
+ shiny::observeEvent(input$dark_mode, {
    bs4Dash::toast(
      title = if (input$dark_mode) "Dark theme on!" else "Light theme on",
      options = list(position = "topRight", class = "bg-warning", autohide = TRUE)

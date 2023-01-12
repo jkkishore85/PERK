@@ -5,6 +5,8 @@
 #' @importFrom bs4Dash bs4DashPage dashboardHeader bs4DashSidebar sidebarUserPanel bs4DashBrand bs4SidebarMenu bs4SidebarMenuItem bs4SidebarMenuSubItem bs4DashBody bs4TabItem bs4TabItems box bs4DashControlbar controlbarMenu controlbarItem skinSelector
 #' @importFrom colourpicker colourInput
 #' @importFrom shinyWidgets sliderTextInput
+#' @importFrom shiny fluidRow selectInput tagList tags icon tabPanel sidebarPanel mainPanel h4 p br
+#'
 #' @noRd
 app_ui <- function(request) {
   shiny::tagList(
@@ -40,28 +42,28 @@ sidebar = bs4Dash::bs4DashSidebar(
           flat = FALSE,
           compact = FALSE,
           childIndent = TRUE,
-          tags$hr(),
+          shiny::tags$hr(),
           bs4Dash::bs4SidebarMenuItem("Info",
                                       bs4Dash::bs4SidebarMenuSubItem("About", tabName = "about_info"),
-                                      icon = icon("circle-info")),
+                                      icon =shiny::icon("circle-info")),
           bs4Dash::bs4SidebarMenuItem("Upload Data",
                             tabName = "user_input",
-                            icon = icon("upload")),
+                            icon =shiny::icon("upload")),
           bs4Dash::bs4SidebarMenuItem("Predicted",
-                            icon = icon("long-arrow-alt-left"),
+                            icon =shiny::icon("long-arrow-alt-left"),
                            bs4Dash::bs4SidebarMenuSubItem("Prescription", tabName = "pec_12"),
                            bs4Dash::bs4SidebarMenuSubItem("Predicted Concentrations", tabName = "pec_11")
           ),
           bs4Dash::bs4SidebarMenuItem("Measured",
                             tabName = "mec_11",
-                            icon = icon("long-arrow-alt-right")),
+                            icon =shiny::icon("long-arrow-alt-right")),
           bs4Dash::bs4SidebarMenuItem("Predicted v Measured",
-                   icon = icon("exchange-alt"),
+                   icon =shiny::icon("exchange-alt"),
                    bs4Dash::bs4SidebarMenuSubItem ("Predicted Vs Measured", tabName = "pcvsmc_11"),
                    bs4Dash::menuSubItem("Prediction Accuracy", tabName = "pcvsmc_12")
           ),
 
-          tags$hr()
+          shiny::tags$hr()
 
         )
       ), # Close of sidebar
@@ -70,23 +72,23 @@ body = bs4Dash::bs4DashBody(
         bs4Dash::bs4TabItems(
           bs4Dash::bs4TabItem(
             tabName = "about_info",
-            tabPanel("About", value = "about",
-                     sidebarPanel(width=1),
-                     mainPanel(width=8,
-                               h4("About:"),
-                               p("PERK: An in-built application to predict and visualize environmental concentration and risk using pharmaceutical prescription data collected at fine spatial resolution."
+            shiny::tabPanel("About", value = "about",
+                     shiny::sidebarPanel(width=1),
+                     shiny::mainPanel(width=8,
+                               shiny::h4("About:"),
+                              shiny::p("PERK: An in-built application to predict and visualize environmental concentration and risk using pharmaceutical prescription data collected at fine spatial resolution."
                                ),
-                               p("PERK acronym for Predicting Environmental concentrations and RisK assessment, is an R package with in-built application tool, aims to facilitate automated modelling and reporting of predicted environmental concentrations of a comprehensive set of pharmaceuticals derived from a wide range of therapeutic classes with different mode of action."),
-                               p("The tool helps users,",
-                                 tags$li("to input their measured concentration,"),
-                                 tags$li("to compare the predicted and measured concentrations of the APIs by means of the PEC/MEC ratio, "),
-                                 tags$li("to establish whether the predicted equations used tend to underestimate or overestimate measured values."),
-                                 tags$li("It provides a consistent interactive user interface in a familiar dashboard layout, enabling users to visualise predicted values and compare with their measured values without any hassles."),
-                                 tags$li("Users can download data and graphs generated using the tool in .csv or publication ready images (.pdf, .eps).")
+                              shiny::p("PERK acronym for Predicting Environmental concentrations and RisK assessment, is an R package with in-built application tool, aims to facilitate automated modelling and reporting of predicted environmental concentrations of a comprehensive set of pharmaceuticals derived from a wide range of therapeutic classes with different mode of action."),
+                              shiny::p("The tool helps users,",
+                                 shiny::tags$li("to input their measured concentration,"),
+                                 shiny::tags$li("to compare the predicted and measured concentrations of the APIs by means of the PEC/MEC ratio, "),
+                                 shiny::tags$li("to establish whether the predicted equations used tend to underestimate or overestimate measured values."),
+                                 shiny::tags$li("It provides a consistent interactive user interface in a familiar dashboard layout, enabling users to visualise predicted values and compare with their measured values without any hassles."),
+                                 shiny::tags$li("Users can download data and graphs generated using the tool in .csv or publication ready images (.pdf, .eps).")
                                ),
-                               h4("Acknowledgments:"),
-                               p("This work is a part of the Wastewater Fingerprinting for Public Health Assessment (ENTRUST) project funded by Wessex Water and EPSRC IAA (grant no. EP/R51164X/1)."),
-                               br()
+                               shiny::h4("Acknowledgments:"),
+                              shiny::p("This work is a part of the Wastewater Fingerprinting for Public Health Assessment (ENTRUST) project funded by Wessex Water and EPSRC IAA (grant no. EP/R51164X/1)."),
+                              shiny::br()
                      )
             )
           ),
@@ -214,7 +216,7 @@ controlbar =  bs4Dash::bs4DashControlbar (
 #' This function is internally used to add external
 #' resources inside the Shiny application.
 #'
-#' @import shiny
+#' @importFrom shiny tags
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources
 #' @noRd
 golem_add_external_resources <- function() {
@@ -223,7 +225,7 @@ golem_add_external_resources <- function() {
     app_sys("app/www")
   )
 
-  tags$head(
+  shiny::tags$head(
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),

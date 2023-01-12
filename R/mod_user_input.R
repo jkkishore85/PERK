@@ -7,6 +7,8 @@
 #' @noRd
 #'
 #' @importFrom shinyWidgets switchInput
+#' @importFrom shiny NS tagList fluidRow column uiOutput conditionalPanel downloadButton tags reactiveValues fileInput
+#' downloadHandler observe moduleServer
 #' @importFrom readr write_csv
 mod_user_input_ui <- function(id, input_name){
   ns <- shiny::NS(id)
@@ -19,18 +21,18 @@ mod_user_input_ui <- function(id, input_name){
       offLabel = "Sample Dataset",
       onLabel = "User Input"
     ),
-    conditionalPanel(
+   shiny::conditionalPanel(
       condition = "input.switch == false", ns = ns,
                      shiny::fluidRow(
-                       column(5,
+                       shiny::column(5,
                                      style=list("padding-right: 28px;"),
                                      shiny::uiOutput(ns("uifile_cpd"))
                        ),
-                       column(3,
+                       shiny::column(3,
                                      style=list("padding-left: 5px;"),
-                                     tags$b("Download Template:"),
-                                     tags$br(),
-                                     downloadButton(ns('dwnld_cpd'))
+                                     shiny::tags$b("Download Template:"),
+                                     shiny::tags$br(),
+                                     shiny::downloadButton(ns('dwnld_cpd'))
                        )
                      )
     )
@@ -46,12 +48,12 @@ mod_user_input_server <- function(id,
                                   dwnld_name,
                                   dwnld_file
                                   ){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
-    vals <- reactiveValues()
+    vals <- shiny::reactiveValues()
 
-    output$uifile_cpd <- renderUI({
-      fileInput(ns('up_file'), id_label,
+    output$uifile_cpd <- shiny::renderUI({
+      shiny::fileInput(ns('up_file'), id_label,
                 multiple = FALSE,
                 accept = c(
                   'text/csv',
@@ -72,7 +74,7 @@ mod_user_input_server <- function(id,
       }
     )
 
-    observe({vals$up_file <- input$up_file})
+    shiny::observe({vals$up_file <- input$up_file})
 
     return(vals)
   })

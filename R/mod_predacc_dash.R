@@ -6,7 +6,10 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
+#' @importFrom shiny fluidRow column selectInput
+#'   conditionalPanel checkboxInput actionButton tags
+#'   reactive NS tagList moduleServer br downloadButton downloadHandler
+#'   renderUI req safeError uiOutput withProgress
 #' @importFrom utils head
 #' @importFrom stats sd
 #' @importFrom zoo as.Date as.yearmon
@@ -23,7 +26,7 @@ mod_predacc_dash_ui <- function(id){
     ## fluidRow start ----
     shiny::fluidRow(
       shinyjs::useShinyjs(),
-      column(9,
+      shiny::column(9,
                     ## Box start start ----
                     bs4Dash::box(width = NULL,
                         closable = FALSE,
@@ -33,11 +36,11 @@ mod_predacc_dash_ui <- function(id){
                         sidebar = bs4Dash::boxSidebar(
                           startOpen = TRUE,
                           id = "predaccsidebar11",
-                          br(),
+                         shiny::br(),
                           bs4Dash::boxPad(
                             width = 8,
                             shiny::fluidRow(
-                              column( width = 4,
+                              shiny::column( width = 4,
                                              shinyWidgets::pickerInput(
                                                inputId = ns("selFeature"),
                                                label = "Compare",
@@ -49,7 +52,7 @@ mod_predacc_dash_ui <- function(id){
                                                )
                                              )
                               ),
-                              column( width = 4,
+                              shiny::column( width = 4,
                                              shinyWidgets::pickerInput(
                                                inputId = ns("select_plot"),
                                                label = "Plot type:",
@@ -75,22 +78,22 @@ mod_predacc_dash_ui <- function(id){
                             shiny::uiOutput(ns("selz_y")),
                             shiny::uiOutput(ns("selz_site")),
                             shiny::uiOutput(ns("selz_compound")),
-                            actionButton(inputId = ns("gen_plot"),
+                           shiny::actionButton(inputId = ns("gen_plot"),
                                                 label = "Generate Graph",
                                                 class="btn btn-success action-button")
                           )
                         ),
                         shiny::fluidRow(
-                          column(
+                          shiny::column(
                             width = 12,
-                            conditionalPanel("input.select_plot == 'bar'", ns = ns,
+                           shiny::conditionalPanel("input.select_plot == 'bar'", ns = ns,
                                              plotly::plotlyOutput(ns("predacc_plot_bar01"), height="600px")),
-                            tags$hr(),
-                            uiOutput(ns("uidownload_btn")),
-                            tags$hr(),
-                            checkboxInput(ns("show_tab"),
+                            shiny::tags$hr(),
+                           shiny::uiOutput(ns("uidownload_btn")),
+                            shiny::tags$hr(),
+                           shiny::checkboxInput(ns("show_tab"),
                                           label = "Show Datatable", value = FALSE),
-                            conditionalPanel(
+                           shiny::conditionalPanel(
                               "input.show_tab == true",  ns =ns,
                               DT::dataTableOutput(ns("tab_plot_data"))
                             )
@@ -116,13 +119,13 @@ mod_predacc_dash_server <- function(id,
                                     fx_info,
                                     flow_info,
                                     global){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
     global <- global
 
-    predacc_inputs <- reactive({
-      req(table_dt$up_file)
-      req(api_family$up_file)
+    predacc_inputs <-shiny::reactive({
+     shiny::req(table_dt$up_file)
+     shiny::req(api_family$up_file)
 
       site_id <- input$site_select
       cpd_name <- input$selz_cpd
@@ -184,11 +187,11 @@ mod_predacc_dash_server <- function(id,
     })
 
     getData <- reactive ({
-      req(pcvsmc_dat$pcvsmc_01())
-      req(api_family$up_file)
-      req(wwtp_info$up_file)
-      req(re_info$up_file)
-      req(fx_info$up_file)
+     shiny::req(pcvsmc_dat$pcvsmc_01())
+     shiny::req(api_family$up_file)
+     shiny::req(wwtp_info$up_file)
+     shiny::req(re_info$up_file)
+     shiny::req(fx_info$up_file)
 
       api_family_inFile <- api_family$up_file
       wwtp_info_inFile <- wwtp_info$up_file
@@ -222,9 +225,9 @@ mod_predacc_dash_server <- function(id,
       )
     })
 
-   accuracy_data <- reactive({
+   accuracy_data <-shiny::reactive({
 
-      req(getData()$pcvsmc_data)
+     shiny::req(getData()$pcvsmc_data)
 
       pcmc_data <- getData()$pcvsmc_data
 
@@ -277,14 +280,14 @@ mod_predacc_dash_server <- function(id,
       )
     })
 
-    plot_data <- reactive({
-      req(predacc_inputs()$cpd_name)
-      req(predacc_inputs()$site_id)
-      req(predacc_inputs()$PA_Key)
-      req(predacc_inputs()$EV_Type)
-      req(predacc_inputs()$pa_date)
+    plot_data <-shiny::reactive({
+     shiny::req(predacc_inputs()$cpd_name)
+     shiny::req(predacc_inputs()$site_id)
+     shiny::req(predacc_inputs()$PA_Key)
+     shiny::req(predacc_inputs()$EV_Type)
+     shiny::req(predacc_inputs()$pa_date)
 
-      req(accuracy_data()$pred_acc_data)
+     shiny::req(accuracy_data()$pred_acc_data)
 
       cpdname <- predacc_inputs()$cpd_name
       sitename <- predacc_inputs()$site_id
@@ -304,14 +307,14 @@ mod_predacc_dash_server <- function(id,
             dplyr::filter(date %in% pcvsmc_dat)
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
     # DT - Tab plot data ----
     output$tab_plot_data <- DT::renderDT({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
         options(
           DT.options = list(
             pageLength = nrow(plot_data()),
@@ -333,13 +336,13 @@ mod_predacc_dash_server <- function(id,
     })
 
     #bar plot - Compound----
-    predacc_bar <- reactive({
+    predacc_bar <-shiny::reactive({
 
-      req(predacc_inputs()$cpd_name)
-      req(predacc_inputs()$site_id)
-      req(predacc_inputs()$PA_Key)
-      req(predacc_inputs()$EV_Type)
-      req(predacc_inputs()$pa_date)
+     shiny::req(predacc_inputs()$cpd_name)
+     shiny::req(predacc_inputs()$site_id)
+     shiny::req(predacc_inputs()$PA_Key)
+     shiny::req(predacc_inputs()$EV_Type)
+     shiny::req(predacc_inputs()$pa_date)
 
       cpdname <- predacc_inputs()$cpd_name
       sitename <- predacc_inputs()$site_id
@@ -370,11 +373,11 @@ mod_predacc_dash_server <- function(id,
     })
 
     output$predacc_plot_bar01 <- renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(predacc_bar()$plot01)
-        req(predacc_inputs()$ggplot_dark_theme)
-        req(predacc_inputs()$ggplot_light_theme)
+       shiny::req(predacc_bar()$plot01)
+       shiny::req(predacc_inputs()$ggplot_dark_theme)
+       shiny::req(predacc_inputs()$ggplot_light_theme)
 
         plot01 <- predacc_bar()$plot01
         ggplot_dark <- predacc_inputs()$ggplot_dark_theme
@@ -390,21 +393,21 @@ mod_predacc_dash_server <- function(id,
     )
 
     # Targets ----
-    targets <- reactive({
-      req(sel_target$up_file)
+    targets <-shiny::reactive({
+     shiny::req(sel_target$up_file)
       tryCatch(
         {
           df <- readr::read_csv(sel_target$up_file$datapath)
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
     # Catchments ----
-    catchment <- reactive({
-      req(table_dt$up_file)
+    catchment <-shiny::reactive({
+     shiny::req(table_dt$up_file)
       tryCatch(
         {
           df <- readr::read_csv(table_dt$up_file$datapath) %>%
@@ -412,17 +415,17 @@ mod_predacc_dash_server <- function(id,
             unique()
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
     # UI Output - Compounds ----
-    output$selz_compound <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(api_family$up_file)
-        req(targets()$Compound)
-        req(input$selFeature)
+    output$selz_compound <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(api_family$up_file)
+       shiny::req(targets()$Compound)
+       shiny::req(input$selFeature)
 
         target_cpd <- unique(targets()$Compound)
 
@@ -438,10 +441,10 @@ mod_predacc_dash_server <- function(id,
     })
 
     # UI Output - site ----
-    output$selz_site <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(table_dt$up_file)
-        req(catchment()$catchment)
+    output$selz_site <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(table_dt$up_file)
+       shiny::req(catchment()$catchment)
 
         site_name <- unique(catchment()$catchment)
 
@@ -457,7 +460,7 @@ mod_predacc_dash_server <- function(id,
           )
         }
         else{
-          selectInput(
+         shiny::selectInput(
             inputId=ns("site_select"),
             label="Select the site:",
             choices= site_name,
@@ -468,15 +471,15 @@ mod_predacc_dash_server <- function(id,
     })
 
     # UI Output - Y axis ----
-    output$selz_y <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(accuracy_data()$pred_acc_data)
+    output$selz_y <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(accuracy_data()$pred_acc_data)
 
         df01 <- accuracy_data()$pred_acc_data
 
         PA_Key <- unique(df01$PA_Key)
 
-        selectInput(
+       shiny::selectInput(
           inputId=ns("select_yaxis"),
           label="Select Y axis:",
           choices= PA_Key,
@@ -486,15 +489,15 @@ mod_predacc_dash_server <- function(id,
     })
 
     # UI Output - PERIOD ----
-    output$selz_period <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(accuracy_data()$pred_acc_data)
+    output$selz_period <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(accuracy_data()$pred_acc_data)
 
         df01 <- accuracy_data()$pred_acc_data
 
         date <- unique(df01$date)
 
-        selectInput(
+       shiny::selectInput(
           inputId=ns("select_date"),
           label="Select Month:",
           choices= date,
@@ -505,10 +508,10 @@ mod_predacc_dash_server <- function(id,
 
 
     # UI Output - Type ----
-    output$selz_type <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_type <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(accuracy_data()$pred_acc_data)
+       shiny::req(accuracy_data()$pred_acc_data)
 
         df01 <- accuracy_data()$pred_acc_data
 
@@ -526,7 +529,7 @@ mod_predacc_dash_server <- function(id,
           )
         }
         else{
-          selectInput(
+         shiny::selectInput(
             inputId=ns("env_type"),
             label="Select Sample Type:",
             choices= Type,
@@ -538,18 +541,18 @@ mod_predacc_dash_server <- function(id,
 
 
     # Download Buttons ----
-    output$uidownload_btn <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        tags$span(
-          downloadButton(ns('downloaddata'), 'Download CSV') ,
-          downloadButton(ns('downloadpdf'), 'Download PDF'),
-          downloadButton(ns('downloadeps'), 'Download EPS')
+    output$uidownload_btn <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+        shiny::tags$span(
+         shiny::downloadButton(ns('downloaddata'), 'Download CSV') ,
+         shiny::downloadButton(ns('downloadpdf'), 'Download PDF'),
+         shiny::downloadButton(ns('downloadeps'), 'Download EPS')
         )
       })
     })
 
     # Download csv01
-    output$downloaddata <- downloadHandler(
+    output$downloaddata <-shiny::downloadHandler(
       filename = function (){ paste0('plot_data', '.csv')},
       content = function(file) {
         write_csv(as.data.frame(plot_data()), file)
@@ -557,15 +560,15 @@ mod_predacc_dash_server <- function(id,
     )
 
     # Download PDF
-    output$downloadpdf <- downloadHandler(
+    output$downloadpdf <-shiny::downloadHandler(
       filename = function(){ paste('prescplot.pdf',sep = '')},
       content = function(file) {
         # pdf ----
         pdf(file, paper = "a4r",width = 14)
 
-        req(predacc_bar()$plot01)
-        req(predacc_inputs()$ggplot_dark_theme)
-        req(predacc_inputs()$ggplot_light_theme)
+       shiny::req(predacc_bar()$plot01)
+       shiny::req(predacc_inputs()$ggplot_dark_theme)
+       shiny::req(predacc_inputs()$ggplot_light_theme)
 
         plot01 <- predacc_bar()$plot01
         ggplot_light <- predacc_inputs()$ggplot_light_theme
@@ -576,7 +579,7 @@ mod_predacc_dash_server <- function(id,
       })
 
     # Download EPS
-    output$downloadeps <- downloadHandler(
+    output$downloadeps <-shiny::downloadHandler(
       filename = function(){ paste('prescplot.eps',sep = '')},
       content = function(file) {
         # eps ----
@@ -585,9 +588,9 @@ mod_predacc_dash_server <- function(id,
                    horizontal = TRUE, onefile = TRUE, paper = "special")
         pdf(file, paper = "a4r",width = 14)
 
-        req(predacc_bar()$plot01)
-        req(predacc_inputs()$ggplot_dark_theme)
-        req(predacc_inputs()$ggplot_light_theme)
+       shiny::req(predacc_bar()$plot01)
+       shiny::req(predacc_inputs()$ggplot_dark_theme)
+       shiny::req(predacc_inputs()$ggplot_light_theme)
 
         plot01 <- predacc_bar()$plot01
         ggplot_light <- predacc_inputs()$ggplot_light_theme

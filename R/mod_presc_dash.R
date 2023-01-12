@@ -6,7 +6,10 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
+#' @importFrom shiny fluidRow column selectInput
+#'   conditionalPanel checkboxInput actionButton tags
+#'   reactive NS tagList moduleServer br downloadButton downloadHandler
+#'   renderUI req safeError uiOutput withProgress
 #' @importFrom utils head
 #' @importFrom stats sd
 #' @importFrom zoo as.Date as.yearmon
@@ -22,7 +25,7 @@ mod_presc_dash_ui <- function(id){
     ## fluidRow start ----
     shiny::fluidRow(
       shinyjs::useShinyjs(),
-      column(9,
+      shiny::column(9,
              ## Box start start ----
              bs4Dash::box(width = NULL,
                  closable = FALSE,
@@ -32,11 +35,11 @@ mod_presc_dash_ui <- function(id){
                  sidebar = bs4Dash::boxSidebar(
                    startOpen = TRUE,
                    id = "pecsidebar12",
-                   br(),
+                  shiny::br(),
                    bs4Dash::boxPad(
                      width = 8,
                      shiny::fluidRow(
-                       column( width = 4,
+                       shiny::column( width = 4,
                                shinyWidgets::pickerInput(
                                  inputId = ns("selFeature"),
                                  label = "Compare",
@@ -48,7 +51,7 @@ mod_presc_dash_ui <- function(id){
                                    )
                                  )
                                ),
-                       column( width = 4,
+                       shiny::column( width = 4,
                                shinyWidgets::pickerInput(
                                  inputId = ns("select_plot"),
                                  label = "Plot type:",
@@ -81,18 +84,18 @@ mod_presc_dash_ui <- function(id){
                        ),
                      shiny::uiOutput(ns("selz_site_pec")),
                      shiny::uiOutput(ns("selz_compound_pec")),
-                     actionButton(inputId = ns("gen_plot"),
+                    shiny::actionButton(inputId = ns("gen_plot"),
                                   label = "Generate Graph",
                                   class="btn btn-success action-button")
                      )
                    ),
                  shiny::fluidRow(
-                   column(
+                   shiny::column(
                      width = 12,
                      plotly::plotlyOutput(ns("presc_plot_line01"), height="600px"),
-                     tags$hr(),
-                     uiOutput(ns("uidownload_btn")),
-                     tags$hr(),
+                     shiny::tags$hr(),
+                    shiny::uiOutput(ns("uidownload_btn")),
+                     shiny::tags$hr(),
                      shiny::checkboxInput(ns("pec_show_tab"),
                                    label = "Show Datatable", value = FALSE),
                      shiny::conditionalPanel(
@@ -116,13 +119,13 @@ mod_presc_dash_server <- function(id,
                                   api_family,
                                   wwtp_info,
                                   global){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
     global <- global
 
-    presc_inputs <- reactive({
-      req(table_dt$up_file)
-      req(api_family$up_file)
+    presc_inputs <-shiny::reactive({
+     shiny::req(table_dt$up_file)
+     shiny::req(api_family$up_file)
       site_id <- input$select_site
       cpd_name <- input$select_compound
       ggplot_dark_theme <-
@@ -174,9 +177,9 @@ mod_presc_dash_server <- function(id,
       )
     })
 
-    getData <- reactive({
-      req(table_dt$up_file)
-      req(api_family$up_file)
+    getData <-shiny::reactive({
+     shiny::req(table_dt$up_file)
+     shiny::req(api_family$up_file)
 
       table_dt_inFile <- table_dt$up_file
       api_family_inFile <- api_family$up_file
@@ -201,14 +204,14 @@ mod_presc_dash_server <- function(id,
         )
     })
 
-    prescription_full <- reactive({
-      req(getData()$prescdata)
-      req(getData()$apifamily)
-      req(getData()$wwtpinfo)
-      req(presc_inputs()$cpd_name)
-      req(presc_inputs()$site_id)
-      req(presc_inputs()$ggplot_dark_theme)
-      req(presc_inputs()$ggplot_light_theme)
+    prescription_full <-shiny::reactive({
+     shiny::req(getData()$prescdata)
+     shiny::req(getData()$apifamily)
+     shiny::req(getData()$wwtpinfo)
+     shiny::req(presc_inputs()$cpd_name)
+     shiny::req(presc_inputs()$site_id)
+     shiny::req(presc_inputs()$ggplot_dark_theme)
+     shiny::req(presc_inputs()$ggplot_light_theme)
 
       df <- getData()$prescdata
       api <- getData()$apifamily
@@ -298,11 +301,11 @@ mod_presc_dash_server <- function(id,
       )
     })
 
-      plot_data <- reactive({
-      req(prescription_full()$df_kgmonth)
-      req(prescription_full()$df_pndp)
-      req(presc_inputs()$cpd_name)
-      req(presc_inputs()$site_id)
+      plot_data <-shiny::reactive({
+     shiny::req(prescription_full()$df_kgmonth)
+     shiny::req(prescription_full()$df_pndp)
+     shiny::req(presc_inputs()$cpd_name)
+     shiny::req(presc_inputs()$site_id)
 
       cpdname <- presc_inputs()$cpd_name
       sitename <- presc_inputs()$site_id
@@ -321,13 +324,13 @@ mod_presc_dash_server <- function(id,
             dplyr::filter(PERIOD > !!input$date_range[1] & PERIOD < !!input$date_range[2])
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
-    catchment <- reactive({
-      req(table_dt$up_file)
+    catchment <-shiny::reactive({
+     shiny::req(table_dt$up_file)
       tryCatch(
         {
           df <- readr::read_csv(table_dt$up_file$datapath) %>%
@@ -335,20 +338,20 @@ mod_presc_dash_server <- function(id,
             unique()
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
-    targets <- reactive({
+    targets <-shiny::reactive({
 
-      req(sel_target$up_file)
+     shiny::req(sel_target$up_file)
       tryCatch(
         {
           df <- readr::read_csv(sel_target$up_file$datapath)
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
@@ -357,8 +360,8 @@ mod_presc_dash_server <- function(id,
 
     # DT Output: Plot Data ----
     output$tab_plot_data <- DT::renderDT({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-      req(plot_data())
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+     shiny::req(plot_data())
       options(DT.options = list(pageLength = nrow(plot_data()),
                                 autoWidth = FALSE,
                                 scrollX = TRUE, scrollY = "600px"))
@@ -374,11 +377,11 @@ mod_presc_dash_server <- function(id,
     })
 
     # UI Output - Compounds ----
-    output$selz_compound_pec <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_compound_pec <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(api_family$up_file)
-        req(targets()$Compound)
+       shiny::req(api_family$up_file)
+       shiny::req(targets()$Compound)
 
         target_cpd <- targets()$Compound
 
@@ -394,15 +397,15 @@ mod_presc_dash_server <- function(id,
     })
 
     # UI Output - site ----
-    output$selz_site_pec <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_site_pec <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(table_dt$up_file)
-        req(catchment()$catchment)
+       shiny::req(table_dt$up_file)
+       shiny::req(catchment()$catchment)
 
         site_name <- catchment()$catchment
 
-        selectInput(
+       shiny::selectInput(
           inputId=ns("select_site"),
           label="Select the site:",
           choices= site_name,
@@ -413,10 +416,10 @@ mod_presc_dash_server <- function(id,
 
     # Plot ----
     output$presc_plot_line01 <- plotly::renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(presc_inputs()$ggplot_dark_theme)
-        req(presc_inputs()$ggplot_light_theme)
+       shiny::req(presc_inputs()$ggplot_dark_theme)
+       shiny::req(presc_inputs()$ggplot_light_theme)
 
         ggplot_light <- presc_inputs()$ggplot_light_theme
         ggplot_dark <- presc_inputs()$ggplot_dark_theme
@@ -477,18 +480,18 @@ mod_presc_dash_server <- function(id,
     )
 
     # Download Buttons ----
-    output$uidownload_btn <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        tags$span(
-          downloadButton(ns('downloaddata_01'), 'Download CSV') ,
-          downloadButton(ns('downloadpdf_01'), 'Download PDF'),
-          downloadButton(ns('downloadeps_01'), 'Download EPS')
+    output$uidownload_btn <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+        shiny::tags$span(
+         shiny::downloadButton(ns('downloaddata_01'), 'Download CSV') ,
+         shiny::downloadButton(ns('downloadpdf_01'), 'Download PDF'),
+         shiny::downloadButton(ns('downloadeps_01'), 'Download EPS')
         )
       })
     })
 
     # Download csv01
-    output$downloaddata_01 <- downloadHandler(
+    output$downloaddata_01 <-shiny::downloadHandler(
       filename = function (){ paste0('plot_data', '.csv')},
       content = function(file) {
         write_csv(as.data.frame(plot_data()), file)
@@ -496,13 +499,13 @@ mod_presc_dash_server <- function(id,
     )
 
     # Download PDF
-    output$downloadpdf_01 <- downloadHandler(
+    output$downloadpdf_01 <-shiny::downloadHandler(
       filename = function(){ paste('prescplot.pdf',sep = '')},
       content = function(file) {
         # pdf ----
         pdf(file, paper = "a4r",width = 14)
-        req(presc_inputs()$ggplot_dark_theme)
-        req(presc_inputs()$ggplot_light_theme)
+       shiny::req(presc_inputs()$ggplot_dark_theme)
+       shiny::req(presc_inputs()$ggplot_light_theme)
 
         ggplot_light <- presc_inputs()$ggplot_light_theme
         ggplot_dark <- presc_inputs()$ggplot_dark_theme
@@ -560,7 +563,7 @@ mod_presc_dash_server <- function(id,
       })
 
     # Download EPS
-    output$downloadeps_01 <- downloadHandler(
+    output$downloadeps_01 <-shiny::downloadHandler(
       filename = function(){ paste('prescplot.eps',sep = '')},
       content = function(file) {
         # eps ----
@@ -568,8 +571,8 @@ mod_presc_dash_server <- function(id,
                    width = 11.69 , height = 8.27, # inches
                    horizontal = TRUE, onefile = TRUE, paper = "special")
         pdf(file, paper = "a4r",width = 14)
-        req(presc_inputs()$ggplot_dark_theme)
-        req(presc_inputs()$ggplot_light_theme)
+       shiny::req(presc_inputs()$ggplot_dark_theme)
+       shiny::req(presc_inputs()$ggplot_light_theme)
 
         ggplot_light <- presc_inputs()$ggplot_light_theme
         ggplot_dark <- presc_inputs()$ggplot_dark_theme
@@ -626,7 +629,7 @@ mod_presc_dash_server <- function(id,
 
     return(
       list(
-        presc_data_full = reactive({
+        presc_data_full =shiny::reactive({
           prescription_full()$df_full})
       )
     )

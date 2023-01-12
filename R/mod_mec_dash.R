@@ -6,7 +6,10 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
+#' @importFrom shiny fluidRow column selectInput
+#'   conditionalPanel checkboxInput actionButton tags
+#'   reactive NS tagList moduleServer br
+#'   renderUI req safeError uiOutput withProgress
 #' @importFrom utils head
 #' @importFrom stats sd
 #' @importFrom zoo as.Date as.yearmon
@@ -23,7 +26,7 @@ mod_mec_dash_ui <- function(id){
     ## fluidRow start ----
     shiny::fluidRow(
       shinyjs::useShinyjs(),
-      column(9,
+      shiny::column(9,
              ## Box start start ----
              bs4Dash::box(width = NULL,
                  closable = FALSE,
@@ -33,11 +36,11 @@ mod_mec_dash_ui <- function(id){
                  sidebar = bs4Dash::boxSidebar(
                    startOpen = TRUE,
                    id = "mecsidebar11",
-                   br(),
+                  shiny::br(),
                    bs4Dash::boxPad(
                      width = 8,
                      shiny::fluidRow(
-                       column( width = 4,
+                       shiny::column( width = 4,
                                shinyWidgets::pickerInput(
                                  inputId = ns("selFeature"),
                                  label = "Compare",
@@ -53,7 +56,7 @@ mod_mec_dash_ui <- function(id){
                                  )
                                )
                        ),
-                       column( width = 4,
+                       shiny::column( width = 4,
                                shinyWidgets::pickerInput(
                                  inputId = ns("select_plot"),
                                  label = "Plot type:",
@@ -72,8 +75,8 @@ mod_mec_dash_ui <- function(id){
                                            start ="2014-12-31",
                                            end = Sys.Date() + 2
                      ),
-                     uiOutput(ns("selz_type")),
-                     selectInput(
+                    shiny::uiOutput(ns("selz_type")),
+                    shiny::selectInput(
                        ns('select_target'),
                        'Target type:',
                        c(
@@ -81,36 +84,36 @@ mod_mec_dash_ui <- function(id){
                        ),
                        selected = 'Compound'
                      ),
-                     uiOutput(ns("selz_y")),
-                     uiOutput(ns("selz_site")),
-                     uiOutput(ns("selz_compound")),
-                     actionButton(inputId = ns("gen_plot"),
+                    shiny::uiOutput(ns("selz_y")),
+                    shiny::uiOutput(ns("selz_site")),
+                    shiny::uiOutput(ns("selz_compound")),
+                    shiny::actionButton(inputId = ns("gen_plot"),
                                   label = "Generate Graph",
                                   class="btn btn-success action-button")
                    )
                  ),
                  shiny::fluidRow(
-                   column(
+                   shiny::column(
                      width = 12,
-                     conditionalPanel("input.select_plot == 'bar'", ns = ns,
-                                      conditionalPanel("input.selFeature == 'compound'", ns = ns,
+                    shiny::conditionalPanel("input.select_plot == 'bar'", ns = ns,
+                                     shiny::conditionalPanel("input.selFeature == 'compound'", ns = ns,
                                                        plotly::plotlyOutput(ns("mec_plot_bar01"), height="600px"),
                                       ),
-                                      conditionalPanel("input.selFeature == 'matrices'", ns = ns,
+                                     shiny::conditionalPanel("input.selFeature == 'matrices'", ns = ns,
                                                        plotly::plotlyOutput(ns("mec_plot_bar02"), height="600px")),
-                                      conditionalPanel("input.selFeature == 'site'", ns = ns,
+                                     shiny::conditionalPanel("input.selFeature == 'site'", ns = ns,
                                                        plotly::plotlyOutput(ns("mec_plot_bar03"), height="600px"))
                      ),
-                     conditionalPanel("input.select_plot == 'box'", ns = ns,
-                                      conditionalPanel("input.selFeature == 'compound'", ns = ns,
+                    shiny::conditionalPanel("input.select_plot == 'box'", ns = ns,
+                                     shiny::conditionalPanel("input.selFeature == 'compound'", ns = ns,
                                                        plotly::plotlyOutput(ns("mec_plot_box01"), height="600px"),
                                       )),
-                     tags$hr(),
-                     uiOutput(ns("uidownload_btn")),
-                     tags$hr(),
-                     checkboxInput(ns("mec_show_tab"),
+                     shiny::tags$hr(),
+                    shiny::uiOutput(ns("uidownload_btn")),
+                     shiny::tags$hr(),
+                    shiny::checkboxInput(ns("mec_show_tab"),
                                    label = "Show Datatable", value = FALSE),
-                     conditionalPanel(
+                    shiny::conditionalPanel(
                        "input.mec_show_tab == true",  ns =ns,
                        DT::dataTableOutput(ns("tab_plot_data"))
                      )
@@ -136,14 +139,14 @@ mod_mec_dash_server <- function(id,
                                 fx_info,
                                 flow_info,
                                 global){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     global <- global
 
-    mec_inputs <- reactive({
-      req(table_dt$up_file)
-      req(api_family$up_file)
+    mec_inputs <-shiny::reactive({
+     shiny::req(table_dt$up_file)
+     shiny::req(api_family$up_file)
 
       site_id <- input$mec_site_select
       cpd_name <- input$selz_cpd
@@ -203,12 +206,12 @@ mod_mec_dash_server <- function(id,
 
     getData <- reactive ({
 
-      req(mec_dat$up_file)
-      req(api_family$up_file)
-      req(wwtp_info$up_file)
-      req(re_info$up_file)
-      req(fx_info$up_file)
-      req(flow_info$up_file)
+     shiny::req(mec_dat$up_file)
+     shiny::req(api_family$up_file)
+     shiny::req(wwtp_info$up_file)
+     shiny::req(re_info$up_file)
+     shiny::req(fx_info$up_file)
+     shiny::req(flow_info$up_file)
 
       api_family_inFile <- api_family$up_file
       wwtp_info_inFile <- wwtp_info$up_file
@@ -257,14 +260,14 @@ mod_mec_dash_server <- function(id,
       )
     })
 
-   measured_full <- reactive({
+   measured_full <-shiny::reactive({
 
-      req(getData()$mec_data)
-      req(getData()$apifamily)
-      req(getData()$wwtpinfo)
-      req(getData()$reinfo)
-      req(getData()$fexcretainfo)
-      req(getData()$flowinfo)
+     shiny::req(getData()$mec_data)
+     shiny::req(getData()$apifamily)
+     shiny::req(getData()$wwtpinfo)
+     shiny::req(getData()$reinfo)
+     shiny::req(getData()$fexcretainfo)
+     shiny::req(getData()$flowinfo)
 
       df <- getData()$mec_data
       api <- getData()$apifamily
@@ -306,12 +309,12 @@ mod_mec_dash_server <- function(id,
       )
     })
 
-    plot_data <- reactive({
-      req(measured_full()$mec_data_full)
-      req(mec_inputs()$cpd_name)
-      req(mec_inputs()$site_id)
-      req(mec_inputs()$MEC_Key)
-      req(mec_inputs()$EV_Type)
+    plot_data <-shiny::reactive({
+     shiny::req(measured_full()$mec_data_full)
+     shiny::req(mec_inputs()$cpd_name)
+     shiny::req(mec_inputs()$site_id)
+     shiny::req(mec_inputs()$MEC_Key)
+     shiny::req(mec_inputs()$EV_Type)
 
       cpdname <- mec_inputs()$cpd_name
       sitename <- mec_inputs()$site_id
@@ -330,20 +333,20 @@ mod_mec_dash_server <- function(id,
 
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
     # bar plot - Compound ----
     output$mec_plot_bar01 <- plotly::renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(mec_inputs()$cpd_name)
-        req(mec_inputs()$site_id)
-        req(mec_inputs()$MEC_Key)
-        req(mec_inputs()$EV_Type)
-        req(plot_data())
+       shiny::req(mec_inputs()$cpd_name)
+       shiny::req(mec_inputs()$site_id)
+       shiny::req(mec_inputs()$MEC_Key)
+       shiny::req(mec_inputs()$EV_Type)
+       shiny::req(plot_data())
 
         cpdname <- mec_inputs()$cpd_name
         sitename <- mec_inputs()$site_id
@@ -402,13 +405,13 @@ mod_mec_dash_server <- function(id,
 
     # bar plot - matrices ----
     output$mec_plot_bar02 <- renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(mec_inputs()$cpd_name)
-        req(mec_inputs()$site_id)
-        req(mec_inputs()$MEC_Key)
-        req(mec_inputs()$EV_Type)
-        req(plot_data())
+       shiny::req(mec_inputs()$cpd_name)
+       shiny::req(mec_inputs()$site_id)
+       shiny::req(mec_inputs()$MEC_Key)
+       shiny::req(mec_inputs()$EV_Type)
+       shiny::req(plot_data())
 
         cpdname <- mec_inputs()$cpd_name
         sitename <- mec_inputs()$site_id
@@ -446,10 +449,10 @@ mod_mec_dash_server <- function(id,
 
     # bar plot - site ----
     output$mec_plot_bar03 <- renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(mec_inputs()$ggplot_dark_theme)
-        req(plot_data())
+       shiny::req(mec_inputs()$ggplot_dark_theme)
+       shiny::req(plot_data())
 
         ggplot_dark <- mec_inputs()$ggplot_dark_theme
 
@@ -467,8 +470,8 @@ mod_mec_dash_server <- function(id,
 
     # box plot - Compound ----
     output$mec_plot_box01 <- renderPlotly (
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(mec_inputs()$ggplot_dark_theme)
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(mec_inputs()$ggplot_dark_theme)
 
         ggplot_dark <- mec_inputs()$ggplot_dark_theme
 
@@ -491,21 +494,21 @@ mod_mec_dash_server <- function(id,
       })
     )
 
-    targets <- reactive({
+    targets <-shiny::reactive({
 
-      req(sel_target$up_file)
+     shiny::req(sel_target$up_file)
       tryCatch(
         {
           df <- readr::read_csv(sel_target$up_file$datapath)
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
-    catchment <- reactive({
-      req(table_dt$up_file)
+    catchment <-shiny::reactive({
+     shiny::req(table_dt$up_file)
       tryCatch(
         {
           df <- readr::read_csv(table_dt$up_file$datapath) %>%
@@ -514,24 +517,24 @@ mod_mec_dash_server <- function(id,
 
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
     })
 
     # UI Output - Compounds ----
-    output$selz_compound <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_compound <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(api_family$up_file)
-        req(targets()$Compound)
-        req(input$selFeature)
+       shiny::req(api_family$up_file)
+       shiny::req(targets()$Compound)
+       shiny::req(input$selFeature)
 
         target_cpd <- unique(targets()$Compound)
 
         if(input$selFeature %in% c("site","matrices" ))
         {
-          selectInput(inputId= ns("selz_cpd"),
+         shiny::selectInput(inputId= ns("selz_cpd"),
                       label="Select Compound:",
                       choices= target_cpd
           )
@@ -550,11 +553,11 @@ mod_mec_dash_server <- function(id,
     })
 
     # UI Output - site ----
-    output$selz_site <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_site <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(table_dt$up_file)
-        req(catchment()$catchment)
+       shiny::req(table_dt$up_file)
+       shiny::req(catchment()$catchment)
 
         site_name <- unique(catchment()$catchment)
 
@@ -570,7 +573,7 @@ mod_mec_dash_server <- function(id,
           )
         }
         else{
-          selectInput(
+         shiny::selectInput(
             inputId=ns("mec_site_select"),
             label="Select the site:",
             choices= site_name,
@@ -581,16 +584,16 @@ mod_mec_dash_server <- function(id,
     })
 
     # UI Output - Y axis ----
-    output$selz_y <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_y <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(measured_full()$mec_data_full)
+       shiny::req(measured_full()$mec_data_full)
 
         df01 <- measured_full()$mec_data_full
 
         MEC_Key <- unique(df01$MEC_Key)
 
-        selectInput(
+       shiny::selectInput(
           inputId=ns("yaxis_mec"),
           label="Select Y axis:",
           choices= MEC_Key,
@@ -600,10 +603,10 @@ mod_mec_dash_server <- function(id,
     })
 
     # UI Output - Type ----
-    output$selz_type <- renderUI({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+    output$selz_type <- shiny::renderUI({
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
-        req(measured_full()$mec_data_full)
+       shiny::req(measured_full()$mec_data_full)
 
         df01 <- measured_full()$mec_data_full
 
@@ -621,7 +624,7 @@ mod_mec_dash_server <- function(id,
           )
         }
         else{
-          selectInput(
+         shiny::selectInput(
             inputId=ns("mec_env_type"),
             label="Select Sample Type:",
             choices= Type,
@@ -633,7 +636,7 @@ mod_mec_dash_server <- function(id,
 
     # DT - Tab plot data ----
     output$tab_plot_data <- DT::renderDT({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
 
         options(
           DT.options = list(
@@ -657,8 +660,8 @@ mod_mec_dash_server <- function(id,
     })
 
     output$tab_flow_data <- DT::renderDT({
-      withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
-        req(getData()$flowinfo)
+      shiny::withProgress(message = 'Data is loading, please wait ...', value = 1:100, {
+       shiny::req(getData()$flowinfo)
 
         flow <- getData()$flowinfo
 
@@ -686,9 +689,9 @@ mod_mec_dash_server <- function(id,
     # return list ----
     return(
       list(
-        mec_full = reactive({
+        mec_full =shiny::reactive({
           measured_full()$mec_data_full}),
-        mec_raw = reactive({
+        mec_raw =shiny::reactive({
           measured_full()$mec_raw})
         )
     )

@@ -7,6 +7,7 @@
 #' @noRd
 #'
 #' @importFrom DT renderDT dataTableOutput datatable
+#' @importFrom shiny NS tagList moduleServer
 mod_data_table_ui <- function(id){
   ns <- shiny::NS(id)
   shiny::tagList(
@@ -19,19 +20,19 @@ mod_data_table_ui <- function(id){
 #'
 #' @noRd
 mod_data_table_server <- function(id, input_mod){
-  moduleServer( id, function(input, output, session){
+  shiny::moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     output$contents <- DT::renderDT({
 
-      req(input_mod$up_file)
+     shiny::req(input_mod$up_file)
 
       tryCatch(
         {
           df <- readr::read_csv(input_mod$up_file$datapath)
         },
         error = function(e) {
-          stop(safeError(e))
+          stop(shiny::safeError(e))
         }
       )
 
