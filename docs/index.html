@@ -65,13 +65,37 @@
 <!-- badges: start -->
 
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
 </h2>
-<p>You can install the development version of PERK like so:</p>
+<p><code>PERK</code> is an R package containing a tool (Shiny App) to predict and visualize environmental concentration and risk using pharmaceutical prescription data collected at fine spatial resolution.</p>
+<p>The tool helps users to input their measured concentration, to compare the predicted (PEC) and measured concentrations (MEC) of the pharmaceuticals by means of the PEC/MEC ratio, to establish whether the predicted equations used tend to underestimate or overestimate measured values.</p>
+<p>It provides a consistent interactive user interface in a familiar dashboard layout, enabling users to visualise predicted values and compare with their measured values without any hassles. Users can download data and graphs generated using the tool in .csv or publication ready images.</p>
+</div>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
+<p>Although the main purpose of the R package is to be installed and used locally, you can give it a quick <a href="http://51.141.234.162/shiny/DemoPERK/" class="external-link">online test run</a> to determine whether it’s right for you before installing it. With just 3 commands, you can install it and begin using it if you like what you see:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'PERK'</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">'PERK'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>For an introduction to the package, step-by-step instructions on getting started, and more information on the different ways you can use the package <a href="">see the <em>Get Started</em> tutorial</a>.</p>
+<p>You can install the development version of <code>PERK</code> from GitHub through following command.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jkkishore85/PERK"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="citation-and-contributors">Citation and Contributors<a class="anchor" aria-label="anchor" href="#citation-and-contributors"></a>
+</h2>
+<p>Please cite this article from this <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4306129" class="external-link">Preprint</a> if the package helps you with your work in any way that justifies it.</p>
+<p>This work is a part of the Wastewater Fingerprinting for Public Health Assessment (ENTRUST) project funded by Wessex Water and EPSRC IAA (grant no. EP/R51164X/1).</p>
+</div>
+<div class="section level2">
+<h2 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
+</h2>
+<p>We accept no liability for any errors in the data or its publication here. Use this data at your own risk.</p>
 </div>
 </div>
   </div>
@@ -109,7 +133,6 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://app.codecov.io/gh/jkkishore85/perk-golem?branch=main" class="external-link"><img src="https://codecov.io/gh/jkkishore85/perk-golem/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
