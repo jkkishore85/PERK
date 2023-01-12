@@ -88,14 +88,6 @@ app_server <- function(input, output, session) {
                                  avg = c(13.5, 38, 10.4, 10.3))
   ## Templates - end ##
 
-  # Handle the download button
-  output$download_pdf <- downloadHandler(
-    filename = "pdf_file.pdf",
-    content = function(file) {
-      file.copy("www/PERK_Tutorial_01.pdf", file)
-    }
-  )
-
   mod01 <- mod_user_input_server("user_input_1",
                         id_label = 'Upload Compounds list:',
                         placeholder = "Upload Compounds (.csv)",
