@@ -13,3 +13,14 @@ $run_dev.*
 ^doc$
 ^Meta$
 ^\.github$
+^docs$
+^images$
+^_pkgdown\.yaml$
+^.covrignore$
+^_pkgdown\.yml$
+^pkgdown$
+^vignettes/articles$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^meta_fns$
+^revdep$
