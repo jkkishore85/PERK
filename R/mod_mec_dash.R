@@ -13,6 +13,7 @@
 #' @importFrom plotly ggplotly renderPlotly layout
 #' @importFrom grDevices dev.off pdf postscript
 #' @importFrom DT renderDT dataTableOutput datatable
+#' @importFrom bs4Dash box boxSidebar boxPad
 #' @importFrom shinyWidgets pickerInput
 #' @import dplyr tidyr ggplot2
 mod_mec_dash_ui <- function(id){

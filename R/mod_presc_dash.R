@@ -14,6 +14,7 @@
 #' @importFrom grDevices dev.off pdf postscript
 #' @importFrom DT renderDT dataTableOutput datatable
 #' @importFrom shinyWidgets pickerInput
+#' @importFrom bs4Dash box boxSidebar boxPad
 #' @import dplyr tidyr ggplot2
 mod_presc_dash_ui <- function(id){
   ns <- shiny::NS(id)

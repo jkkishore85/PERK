@@ -14,6 +14,7 @@
 #' @importFrom grDevices dev.off pdf postscript
 #' @importFrom DT renderDT dataTableOutput datatable
 #' @importFrom shinyWidgets pickerInput
+#' @importFrom bs4Dash box boxSidebar boxPad
 #' @import dplyr tidyr ggplot2
 mod_predacc_dash_ui <- function(id){
   ns <- shiny::NS(id)
@@ -591,7 +592,7 @@ mod_predacc_dash_server <- function(id,
         plot01 <- predacc_bar()$plot01
         ggplot_light <- predacc_inputs()$ggplot_light_theme
 
-        ggplot_light <- perk_inputs()$ggplot_light_theme
+        ggplot_light <- predacc_inputs()$ggplot_light_theme
 
         print(plot01 + ggplot_light)
 

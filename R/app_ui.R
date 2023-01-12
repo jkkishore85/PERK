@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import bs4Dash
+#' @importFrom bs4Dash bs4DashPage dashboardHeader bs4DashSidebar sidebarUserPanel bs4DashBrand bs4SidebarMenu bs4SidebarMenuItem bs4SidebarMenuSubItem bs4DashBody bs4TabItem bs4TabItems box bs4DashControlbar controlbarMenu controlbarItem skinSelector
 #' @importFrom colourpicker colourInput
 #' @importFrom shinyWidgets sliderTextInput
 #' @noRd
@@ -20,7 +20,7 @@ app_ui <- function(request) {
 
       # Header
       header = bs4Dash::dashboardHeader(
-        title = bs4Dash::dashboardBrand(
+        title = bs4Dash::bs4DashBrand(
           title = "PERK",
           opacity = 0.8),
         fixed = TRUE,
@@ -67,8 +67,8 @@ sidebar = bs4Dash::bs4DashSidebar(
       ), # Close of sidebar
 body = bs4Dash::bs4DashBody(
 #body = bs4Dash::dashboardBody(
-        bs4Dash::tabItems(
-          bs4Dash::tabItem(
+        bs4Dash::bs4TabItems(
+          bs4Dash::bs4TabItem(
             tabName = "about_info",
             tabPanel("About", value = "about",
                      sidebarPanel(width=1),
@@ -90,7 +90,7 @@ body = bs4Dash::bs4DashBody(
                      )
             )
           ),
-          bs4Dash::tabItem(
+          bs4Dash::bs4TabItem(
             tabName = "user_input",
             shiny::fluidRow(
               bs4Dash::box(
@@ -124,32 +124,30 @@ body = bs4Dash::bs4DashBody(
               )
             )
             ),
-          datatables_tab,
-          bs4Dash::tabItem (
+          bs4Dash::bs4TabItem (
             tabName = "pec_12",
             mod_presc_dash_ui("presc_dash_1")
           ),
-          bs4Dash::tabItem (
+          bs4Dash::bs4TabItem (
             tabName = "pec_11",
             mod_pec_dash_ui("pec_dash_1")
           ),
-          bs4Dash::tabItem (
+          bs4Dash::bs4TabItem (
             tabName = "mec_11",
             mod_mec_dash_ui("mec_dash_1")
           ),
-          bs4Dash::tabItem (
+          bs4Dash::bs4TabItem (
             tabName = "pcvsmc_11",
             mod_pecvsmec_dash_ui("pecvsmec_dash_1")
           ),
-          bs4Dash::tabItem (
+          bs4Dash::bs4TabItem (
             tabName = "pcvsmc_12",
             mod_predacc_dash_ui("predacc_dash_1")
           )
-        )# End of tabItems
+        )# End of bs4TabItems
       ), #close of body
 
 controlbar =  bs4Dash::bs4DashControlbar (
-#controlbar =  bs4Dash::dashboardControlbar(
         id = "controlbar",
         skin = "light",
         pinned = FALSE,
