@@ -4,6 +4,7 @@
 #'     DO NOT REMOVE.
 #' @noRd
 #' @importFrom tibble tibble
+#' @importFrom bs4Dash toast
 app_server <- function(input, output, session) {
   # Global variables
   global <- reactiveValues()
@@ -192,7 +193,7 @@ app_server <- function(input, output, session) {
   # current theme info ---------------------------------------------------------
 
  observeEvent(input$dark_mode, {
-   toast(
+   bs4Dash::toast(
      title = if (input$dark_mode) "Dark theme on!" else "Light theme on",
      options = list(position = "topRight", class = "bg-warning", autohide = TRUE)
    )
