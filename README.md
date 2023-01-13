@@ -44,7 +44,9 @@ run_app()
 
 For an introduction to the package, step-by-step instructions on getting
 started, and more information on the different ways you can use the
-package [see the *Get Started* tutorial]().
+package
+[*PERK-Walkthrough*](https://jkkishore85.github.io/PERK/articles/PERK-Walkthrough.html)
+tutorial.
 
 You can install the development version of `PERK` from GitHub through
 following command.
