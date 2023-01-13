@@ -20,7 +20,7 @@
 ##
 golem::fill_desc(
   pkg_name = "PERK", # The Name of the package containing the App
-  pkg_title = "Predicting Envionmental Concentration and Risk", # The Title of the package containing the App
+  pkg_title = "Predicting Environmental Concentration and Risk", # The Title of the package containing the App
   pkg_description = "A Shiny Web Application to predict and visualize concentrations of pharmaceuticals in the aqueous environment.", # The Description of the package containing the App
   author_first_name = "Kishore Kumar", # Your First Name
   author_last_name = "Jagadeesan", # Your Last Name

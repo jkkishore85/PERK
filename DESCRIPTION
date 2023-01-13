@@ -1,5 +1,5 @@
 Package: PERK
-Title: Predicting Envionmental Concentration and Risk
+Title: Predicting Environmental Concentration and Risk
 Version: 0.0.9
 Authors@R: 
     person("Kishore Kumar", "Jagadeesan", ,"jkkishore85@gmail.com", 
