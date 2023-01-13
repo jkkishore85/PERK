@@ -4,7 +4,7 @@
 # PERK
 
 <!-- badges: start -->
-
+[![R-CMD-check](https://github.com/jkkishore85/PERK/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jkkishore85/PERK/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
