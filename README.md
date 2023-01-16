@@ -8,6 +8,10 @@
 [![R-CMD-check](https://github.com/jkkishore85/PERK/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jkkishore85/PERK/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/PERK)](https://CRAN.R-project.org/package=PERK)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/PERK)](https://CRAN.R-project.org/package=PERK)
 <!-- badges: end -->
 
 ## Description
