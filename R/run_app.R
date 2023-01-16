@@ -4,7 +4,13 @@
 #' See `?golem::get_golem_options` for more details.
 #' @inheritParams shiny::shinyApp
 #'
+#' @return Opens up the in-built Shiny App.
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#' run_app()
+#' }
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
 run_app <- function(

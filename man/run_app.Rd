@@ -36,6 +36,14 @@ expression in order for the match to be considered successful.}
 \item{...}{arguments to pass to golem_opts.
 See `?golem::get_golem_options` for more details.}
 }
+\value{
+Opens up the in-built Shiny App.
+}
 \description{
 Run the Shiny Application
+}
+\examples{
+\dontrun{
+run_app()
+}
 }
