@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' run_app()
 #' }
 #' @importFrom shiny shinyApp

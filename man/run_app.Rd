@@ -43,7 +43,7 @@ Opens up the in-built Shiny App.
 Run the Shiny Application
 }
 \examples{
-\dontrun{
+if (interactive()) {
 run_app()
 }
 }
