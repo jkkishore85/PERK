@@ -1,12 +1,12 @@
 Package: PERK
 Title: Predicting Environmental Concentration and Risk
-Version: 0.0.9
+Version: 0.0.9.1
 Authors@R: 
     person("Kishore Kumar", "Jagadeesan", ,"jkkishore85@gmail.com", 
     role = c("cre", "aut", "cph"), 
     comment = c(ORCID = "0000-0003-0916-256X"))
 Description: A Shiny Web Application to predict and visualize concentrations of pharmaceuticals in the aqueous environment. 
-    Jagadeesan K., Barden R. and Kasprzyk-Hordern B. (2022) <https://dx.doi.org/10.2139/ssrn.4306129>.
+    Jagadeesan K., Barden R. and Kasprzyk-Hordern B. (2022) <https://www.ssrn.com/abstract=4306129>.
 License: GPL (>= 3)
 URL: https://github.com/jkkishore85/PERK/, https://jkkishore85.github.io/PERK/
 BugReports: https://github.com/jkkishore85/PERK/issues
