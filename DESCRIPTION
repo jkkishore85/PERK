@@ -1,6 +1,6 @@
 Package: PERK
 Title: Predicting Environmental Concentration and Risk
-Version: 0.0.9.1
+Version: 0.0.9.2
 Authors@R: 
     person("Kishore Kumar", "Jagadeesan", ,"jkkishore85@gmail.com", 
     role = c("cre", "aut", "cph"), 
