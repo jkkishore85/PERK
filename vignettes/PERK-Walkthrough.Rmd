@@ -61,8 +61,8 @@ The following dataset are provided from WWTP collaborators,
 
 ```{r, setup, include=FALSE}
 knitr::opts_template$set(fullwidth = list(
-  fig.width = 10, fig.height = 6,
-  fig.retina = 2, out.width = '100%'
+  fig.width = 4, fig.height = 4, 
+  fig.retina = 2, out.width = '50%', out.height = '50%'
 ))
 ```
 
@@ -78,8 +78,10 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 
 -   Download data: Click on the download buttons to download generated plot/data in publication friendly .pdf/.eps or .csv files.
 
+```{r fig-workflow, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 1: PERK Workflow",  out.width="100%"}
+knitr::include_graphics("img/perk_workflow-min.png")
+```
 
-![Figure 1. PERK: Workflow.](img/perk_workflow-min.png){#fig-workflow}
 
 # PERK Features {#sec-features}
 
@@ -92,12 +94,15 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 
 -   Overview of the individual panels and their options can be found in **Figure 2** and will be discussed in the following sections.
 
-![Figure 2. PERK: Features](img/perk_features-min.png){#fig-features}
-
+```{r fig-features, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 2. PERK: Features",  out.width="100%"}
+knitr::include_graphics("img/perk_features-min.png")
+```
 
 # Upload Data {#sec-upload-data}
 
-![Figure 3. PERK: Upload Data](img/datainput-min.png){#fig-upload-data}
+```{r fig-upload-data, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 3. PERK: Upload Data",  out.width="100%"}
+knitr::include_graphics("img/datainput-min.png")
+```
 
 | Part | Remarks                               |
 |------|---------------------------------------|
@@ -124,23 +129,25 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 
 # Predicted: Prescription {#sec-pred-presc}
 
-![Figure 4. Predicted: Prescription - AV Panel.](img/predicted01-min.png){#fig-predicted01}
+```{r fig-predicted01, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 4. Predicted: Prescription - AV Panel.",  out.width="100%"}
+knitr::include_graphics("img/predicted01-min.png")
+```
 
 -   Different parts of the `Predicted: Prescription` sub-panel and `PERK` dashboard is highlighted in the **Figure 4** and listed in the **Table 2**.
 
 -   In Prescription sub-panel, user can select the period of their interest using the `Data Range` option, and select prescription type (raw or population normalized) value using `Target type` and the site using `Select the site` options in the analysis and visualisation settings (AVS) tab, as in **Figure 4**
 
-| Part | Remarks                                                                                 |
-|------------|------------------------------------------------------------|
-| 1    | Analysis and Visualisation (AV) Panel                                                   |
-| 2    | Full screen                                                                             |
-| 3    | Dark and Light mode                                                                     |
-| 4    | Plot settings                                                                           |
-| 5    | Plot generated based on user selection                                                  |
-| 6    | Analysis and Visualisation settings (AVS) panel                                         |
-| 7    | User log-out                                                                            |
+| Part | Remarks                                                    |
+|------|------------------------------------------------------------|
+| 1    | Analysis and Visualisation (AV) Panel                      |
+| 2    | Full screen                                                |
+| 3    | Dark and Light mode                                        |
+| 4    | Plot settings                                              |
+| 5    | Plot generated based on user selection                     |
+| 6    | Analysis and Visualisation settings (AVS) panel            |
+| 7    | User log-out                                               |
 | 8    | Download buttons to download the generated plot as .pdf or .eps and data as .csv format |
-| 9    | Show Datatable                                                                          |
+| 9    | Show Datatable |
 
 : Table 2. Predicted: Prescription Sub-Panel
 
@@ -149,14 +156,19 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 -   User can download the generated plot as publication-friendly images in .pdf/.eps format, user can also download the images in .png format and data generated for the plot as .csv file using the download buttons present below the plot.
 
 -   User can view the data table by checking the `Show Datatable` check box present below the download buttons.
+```{r fig-prescraw, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 5. PC: kg/month.",  out.width="100%"}
+knitr::include_graphics("img/prescplot01-1-min.png")
+```
 
-![Figure 5. PC: kg/month.](img/prescplot01-1-min.png){#fig-prescraw}
-
-![Figure 6. PC: PNDP.](img/prescplot02-1-min.png){#fig-prescpndp}
+```{r fig-prescpndp, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 6. PC: PNDP.",  out.width="100%"}
+knitr::include_graphics("img/prescplot02-1-min.png")
+```
 
 # Predicted: Predicted Concentration {#sec-pred-pec}
 
-![Figure 7. Predicted: Predicted Concentrations - AV Panel.](img/predicted02-min.png){#fig-predicted02}
+```{r fig-predicted02, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 7. Predicted: Predicted Concentrations - AV Panel.",  out.width="100%"}
+knitr::include_graphics("img/predicted02-min.png")
+```
 
 -   Different parts of the `Predicted: Predicted Concentrations` sub-panel and `PERK` dashboard is highlighted in the  **Figure 7** and listed in the  **Table 3**.
 
@@ -182,9 +194,13 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
     -   `PEC_II`: This prediction is based on the prescription per year.
 
 ::: {layout-ncol="2"}
-![Figure 8. PC: concentration/month.](img/predplot01-1-min.png){#fig-predicted03}
+```{r fig-predicted03, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 8. PC: concentration/month.",  out.width="100%"}
+knitr::include_graphics("img/predplot01-1-min.png")
+```
 
-![Figure 9. PC: concentration/period.](img/predplot02-1-min.png){#fig-predicted04}
+```{r fig-predicted04, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 9. PC: concentration/period.",  out.width="100%"}
+knitr::include_graphics("img/predplot02-1-min.png")
+```
 :::
 
 -   This panel visualise prediction per month for the selected period `(ng/L)` as in the **Figure 8**, and total prediction per selected period `(ng/L)`, as in the **Figure 9**
@@ -197,12 +213,14 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 
 ## Measured (MC) {#sec-measured}
 
-![Figure 10. Measured: Measured Concentrations - AV Panel.](img/measured01-min.png){#fig-measured01}
+```{r fig-measured01, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 10. Measured: Measured Concentrations - AV Panel.",  out.width="100%"}
+knitr::include_graphics("img/measured01-min.png")
+```
 
 -   Different parts of the `Measured` tab and `PERK` dashboard is highlighted in the **Figure 10** and listed in the **Table 4**.
 
 | Part | Remarks                                                                                 |
-|------------------------------------|------------------------------------|
+|------|------------------------------------|
 | 1    | Analysis and Visualisation (AV) Panel                                                   |
 | 2    | Full screen                                                                             |
 | 3    | Dark and Light mode                                                                     |
@@ -224,9 +242,13 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 -   User can view the data table by checking the `Show Datatable` check box present below the download buttons.
 
 ::: {layout-ncol="2"}
-![Figure 11. MC: concentration/month.](img/mcplot01-1-min.png){#fig-mcmonth}
+```{r fig-mcmonth, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 11. MC: concentration/month.",  out.width="100%"}
+knitr::include_graphics("img/mcplot01-1-min.png")
+```
 
-![Figure 12. MC: concentration/period.](img/mcplot02-1-min.png){#fig-mctotal}
+```{r fig-mctotal, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 12. MC: concentration/period.",  out.width="100%"}
+knitr::include_graphics("img/mcplot02-1-min.png")
+```
 :::
 
 -   Three types of measured values can be visualised in this panel based on the measurement data uploaded by the user,
@@ -245,12 +267,14 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 
 ## Predicted vs Measured: Predicted vs Measured {#sec-pcvsmc-pcvsmc}
 
-![Figure 13. Predicted vs Measured: Predicted vs Measured - AV Panel.](img/pcvsmc01-min.png){#fig-pcsvsmc01}
+```{r fig-pcsvsmc01, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 13. Predicted vs Measured: Predicted vs Measured - AV Panel.",  out.width="100%"}
+knitr::include_graphics("img/pcvsmc01-min.png")
+```
 
 -   Different parts of the `Predicted vs Measured: Predicted vs Measured` sub-panel and `PERK` dashboard is highlighted in the **Figure 13** and listed in the **Table 5**.
 
-| Part | Remarks                                                                                 |
-|------------------------------------|------------------------------------|
+| Part | Remarks                            |
+|------|------------------------------------|
 | 1    | Analysis and Visualisation (AV) Panel                                                   |
 | 2    | Full screen                                                                             |
 | 3    | Dark and Light mode                                                                     |
@@ -268,9 +292,16 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 -   Predicted vs Measured trends in the `Predicted vs Measured` (PCvsMC) panel, can generate measured concentration vs `PEC_I` and `PEC_II`, predictions based on monthly prescription as in **Figure 14** and prediction based on the prescription per year **Figure 15** respectively.
 
 ::: {layout-ncol="2"}
-![Figure 14. PCvsMC: PEC-I.](img/pcvsmcplot01-1-min.png){#fig-pcvsmcplot1}
 
-![Figure 15. PCvsMC: PEC-II.](img/pcvsmcplot02-1-min.png){#fig-pcvsmcplot2}
+```{r fig-pcvsmcplot1, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 14. PCvsMC: PEC-I.",  out.width="100%"}
+knitr::include_graphics("img/pcvsmcplot01-1-min.png")
+```
+
+
+```{r fig-pcvsmcplot2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 15. PCvsMC: PEC-II.",  out.width="100%"}
+knitr::include_graphics("img/pcvsmcplot02-1-min.png")
+```
+
 :::
 
 -   User can download the generated plot as publication-friendly images in .pdf/.eps format, user can also download the images in .png format and data generated for the plot as .csv file using the download buttons present below the plot.
@@ -280,11 +311,12 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 ## Predicted vs Measured: Prediction Accuracy {#sec-pcvsmc-pa}
 
 -   Different parts of the `Predicted vs Measured: Prediction Accuracy` sub-panel and `PERK` dashboard is highlighted in the **Figure 16** and listed in the **Table 6**.
+```{r fig-pcsvsmc02, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 16. Predicted vs Measured: Prediction Accuracy - AV Panel.",  out.width="100%"}
+knitr::include_graphics("img/pcvsmc02-min.png")
+```
 
-![Figure 16. Predicted vs Measured: Prediction Accuracy - AV Panel.](img/pcvsmc02-min.png){#fig-pcsvsmc02}
-
-| Part | Remarks                                                                                 |
-|------------------------------------|------------------------------------|
+| Part | Remarks                            |
+|------|------------------------------------|
 | 1    | Analysis and Visualisation (AV) Panel                                                   |
 | 2    | Full screen                                                                             |
 | 3    | Dark and Light mode                                                                     |
@@ -300,7 +332,9 @@ The workflow in this tutorial consists of the following steps, as in the **Figur
 -   In `Prediction Accuracy` sub-panel, user can select the period of their interest using the `Select Period` option, and select sample type (wastewater influent `INF`, wastewater effluent `EFF` and river `RDOWN`) using `Select Sample type` and the site using `Select the site` options in the analysis and visualisation settings (AVS) tab, as in **Figure 16**
 -   Prediction Accuracy trends in the `Prediction Accuracy` (PA) panel, can generate trends in `PA_I` and `PA_II`, predictions based on monthly prescription as in **Figure 17** and prediction based on the prescription per year respectively.
 
-![Figure 17. PCvsMC: PA-I.](img/paplot01-1-min.png){#fig-paplot01}
+```{r fig-paplot01, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 17. PCvsMC: PA-I.",  out.width="100%"}
+knitr::include_graphics("img/paplot01-1-min.png")
+```
 
 -   User can download the generated plot as publication-friendly images in .pdf/.eps format, user can also download the images in .png format and data generated for the plot as .csv file using the download buttons present below the plot.
 
