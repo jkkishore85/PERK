@@ -59,13 +59,13 @@ app_server <- function(input, output, session) {
                                 date = date )
 
   # Flow data template
-
   flow_template <-  tibble::tibble(catchment = c("A","A","A","A","A",
                                                  "A","A","A","A","A"),
                                    Date = PERIOD,
                                    Type = Type,
                                    `Total_Flow(m3)`= mean_val)
 
+  # Compound list template
   cpd_template <- tibble::tibble(Compound = compound_list)
 
   apifamily_template <- tibble::tibble (NM = c("citalopram",	"citalopram hydrobromide", "citalopram hydrochloride"),
@@ -73,6 +73,7 @@ app_server <- function(input, output, session) {
                                        family	 = c("Antidepressants","Antidepressants","Antidepressants"),
                                        bnf_chapter = c("Central Nervous System","Central Nervous System","Central Nervous System"))
 
+  # Site information template
   SI_template <- tibble::tibble (Total_PE = c(109543,
                                              867244,
                                              37714,
@@ -81,10 +82,12 @@ app_server <- function(input, output, session) {
                                 catchment = c("C", "E", "A", "D", "B"),
                                 Year = c(2015,2015,2015,2015,2015))
 
+  # Removal efficiency template
   RE_template <- tibble::tibble (Compound = c("carbamazepine","carbamazepine","carbamazepine","carbamazepine","carbamazepine"),
                                  catchment = c("A", "B", "C", "D", "E"),
                                 rm_eff = c(-2.53,-20.26, 2.2, 13.01,-20.31 ),
                                 rm_eff_SD = c(24.6,16.58, 19.85, 47.37, 168.15))
+  # Fexcreta template
   Fx_template <- tibble::tibble (Compound = c("carbamazepine", "citalopram", "venlafaxine", "fluoxetine" ),
                                  low = 	c(13.5, 38, 10.4, 10.3),
                                  high = c(13.5, 38, 10.4, 10.3),
@@ -131,6 +134,11 @@ app_server <- function(input, output, session) {
                                 placeholder = 'Upload FL (.csv):',
                                 dwnld_name = 'FL_template.csv',
                                 dwnld_file = flow_template)
+  mod09 <- mod_user_input_server("user_input_9",
+                                 id_label = 'Environmental Data (EV):',
+                                 placeholder = 'Upload EV (.csv):',
+                                 dwnld_name = 'EV_template.csv',
+                                 dwnld_file = ev_template)
 
   mod_data_table_server("data_table_1", mod01)
   mod_data_table_server("data_table_2", mod02)
@@ -140,6 +148,7 @@ app_server <- function(input, output, session) {
   mod_data_table_server("data_table_6", mod06)
   mod_data_table_server("data_table_7", mod07)
   mod_data_table_server("data_table_8", mod08)
+  mod_data_table_server("data_table_9", mod09)
 
   presc_mod <- mod_presc_dash_server(id = "presc_dash_1",
                       table_dt = mod02,

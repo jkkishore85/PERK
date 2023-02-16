@@ -122,7 +122,8 @@ body = bs4Dash::bs4DashBody(
                 width = 4,
                 closable = FALSE,
                 collapsible = TRUE,
-                maximizable = TRUE
+                maximizable = TRUE,
+                mod_user_input_ui("user_input_9", "Upload Environment Data (EV):")
               )
             )
             ),
