@@ -7,6 +7,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE} 
+library(fontawesome)
+```
+
 # Introduction
 
 The aim of PERK is to predict and visualize concentrations of pharmaceuticals in the aqueous environment.
@@ -339,6 +343,18 @@ knitr::include_graphics("img/paplot01-1-min.png")
 -   User can download the generated plot as publication-friendly images in .pdf/.eps format, user can also download the images in .png format and data generated for the plot as .csv file using the download buttons present below the plot.
 
 -   User can view the data table by checking the `Show Datatable` check box present below the download buttons.
+
+# Plot Settings {#settings}
+
+- Plot settings `r fa("screwdriver-wrench", fill = "grey")`, feature offers various options for controlling and customising the user interface using the `skin` tab; and plot elements using the `plot` tab.
+- The `skin` tab as in the **Figure 18 A** provides settings for changing the theme of the `Navigation Bar`, `Sidebar`, and `Accents` in the user interface. This tab also offers the option to switch between `Dark and 'Light' mode for the Control Bar.
+- The `plot` tab as in the **Figure 18 B** provides options for changing the fill colours in the generated plots.
+- The `plot` tab also provides options for changing the plot line width in the X and Y axis and the point outline colour.
+
+
+```{r fig-plotsetting, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 18. Plot Settings, A: `Skin` Tab; B: `Plot` Tab.",  out.width="100%"}
+knitr::include_graphics("img/plot-settings.png")
+```
 
 # Acknowledgements {#acknowledgements}
 
