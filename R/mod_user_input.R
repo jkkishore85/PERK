@@ -18,8 +18,8 @@ mod_user_input_ui <- function(id, input_name){
       label = input_name,
       value = TRUE,
       labelWidth = "100px",
-      offLabel = "Sample Dataset",
-      onLabel = "User Input"
+      onLabel = "Sample Dataset",
+      offLabel = "User Input"
     ),
    shiny::conditionalPanel(
       condition = "input.switch == false", ns = ns,
